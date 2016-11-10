@@ -101,3 +101,21 @@ var fills = (function() {
   createMix(primary.trump,   primary.white, 'trump',   mixed_colors);
   return mixed_colors;
 })();
+
+function boosted(original, boost) {
+  var boosted = {};
+  for (var key in original) {
+    boosted[key] = original[key];
+  }
+
+  if (boost.stein > 1 || boost.stein < 0) {
+    console.warn("Invalid boost.stein: " + boost.stein);
+  }
+  if (boost.johnson > 1 || boost.johnson < 0) {
+    console.warn("Invalid boost.johnson: " + boost.johnson);
+  }
+  boosted.clinton = original.clinton + (original.stein * boost.stein) + (original.johnson + boost.johnson);
+  boosted.trump = original.trump + (original.stein * (1-boost.stein)) + (original.johnson + (1-boost.johnson));
+
+  return boosted;
+}
