@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>Third Party Scenarios</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.js" crossorigin="anonymous"
+            integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+    <script src="js/datamaps.all.js"></script>
+  </head>
+  <body>
+    <div id="container" style="position: relative; width: 1000px; height: 600px;"></div>
+
+    <script>
+      $(document).ready(function() {
+        var electoral_map = window.electoral_map = new Datamap({
+          element: document.getElementById('container'), scope: 'usa'
+        });
+      });
+    </script>
+  </body>
+</html>
