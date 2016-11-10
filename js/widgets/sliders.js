@@ -40,7 +40,7 @@ $( function() {
     }
   });
 
-  $( "#green, #blue" ).slider({
+  $green_and_blue.slider({
       orientation: "horizontal",
       range: "min",
       max: 255,
