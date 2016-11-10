@@ -1,39 +1,46 @@
 $( function() {
+  var $green   = $("#green"),
+      $blue    = $("#blue"),
+      $stein   = $("#stein"),
+      $johnson = $("#johnson"),
+      $green_and_blue = $( "#green, #blue" );
 
-  function hexFromRGB(r, g, b) {
-    var hex = [
-      r.toString( 16 ),
-      g.toString( 16 ),
-      b.toString( 16 )
-    ];
-
-    $.each( hex, function( nr, val ) {
-      if ( val.length === 1 ) {
-        hex[ nr ] = "0" + val;
-      }
-    });
-
-    return hex.join( "" ).toUpperCase();
-  }
-
-  var ct = 0;
   function refreshSwatch() {
-    var stein   = $( "#green" ).slider( "value" ),
-        johnson = $( "#blue" ).slider( "value" );
-    
-    var booster = { stein:   stein/256, johnson: johnson/256 };
+    var stein   = $green.slider('value'),
+        johnson = $blue.slider('value');
 
-    $("#stein").attr('value',   Math.floor(1000*booster.stein) / 10 );   //Math.floor(1000*stein/256)   / 10);
-    $("#johnson").attr('value', Math.floor(1000*booster.johnson) / 10); //1000*johnson/256) / 10);
+    var booster  = { stein:   stein/256, johnson: johnson/256 },
+        tmpGary  =  Math.floor(1000*booster.johnson) / 10,
+        tmpStein =  Math.floor(1000*booster.stein) / 10;
 
-    ct += 1;
-    console.log("Refreshing map (" + ct + ")" );
+    $stein.attr('value', tmpStein);
+    $stein.val(tmpStein);
+
+    $johnson.attr('value', tmpGary);
+    $johnson.val(tmpGary);
+
     if (!!window.refresh_map) {
       window.refresh_map(booster);
     }
   }
 
-  $( "#red, #green, #blue" ).slider({
+  $johnson.on('change', function() {
+    if (!$johnson.val()) {
+      $blue.slider('value', 128);
+    } else {
+      $blue.slider('value', 2.56*$johnson.val());
+    }
+  });
+
+  $stein.on('change', function() {
+    if (!$stein.val()) {
+      $blue.slider('value', 128);
+    } else {
+      $blue.slider('value', 2.56*$stein.val());
+    }
+  });
+
+  $( "#green, #blue" ).slider({
       orientation: "horizontal",
       range: "min",
       max: 255,
@@ -42,6 +49,6 @@ $( function() {
       change: refreshSwatch
   });
 
-  $( "#green" ).slider( "value", 140 );
-  $( "#blue" ).slider(  "value", 60 );
+  $green.slider( "value", 128 );
+  $blue.slider(  "value", 128 );
 } );

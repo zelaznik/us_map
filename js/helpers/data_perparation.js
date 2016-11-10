@@ -55,8 +55,7 @@ var raw_data = {
 var primary = {
   clinton:    [ 48, 101, 150],
   trump:      [204,  71,  49],
-  white:      [255, 255, 255],
-  light_grey: [200, 200, 200]
+  white:      [255, 255, 255]
 };
 
 function mixColor(color_start, color_finish, alpha) {
@@ -80,8 +79,15 @@ function createMix(color_start, color_finish, color_name, mixed_colors) {
   return mixed_colors;
 }
 
-function getKey(clinton, trump) {
-  var exponent = 0.50, multiplier = 2;
+function getKey(clinton, trump, pickup) {
+  if (pickup === 'clinton') {
+    return 'pickup_clinton';
+  } else if (pickup === 'trump') {
+    return 'pickup_trump';
+  }
+
+  var multiplier = 2,
+      exponent   = 0.25;
 
   var margin     = Math.abs(clinton - trump) / (clinton+trump);
   var curved     = Math.pow(margin, exponent);
@@ -96,26 +102,57 @@ function getKey(clinton, trump) {
 }
 
 var fills = (function() {
-  var mixed_colors = {};
+  var mixed_colors = {
+    'pickup_clinton': '#00FF00',
+    'pickup_trump':   '#FF00FF'
+  };
   createMix(primary.clinton, primary.white, 'clinton', mixed_colors);
   createMix(primary.trump,   primary.white, 'trump',   mixed_colors);
-  return mixed_colors;
+  return Object.freeze(mixed_colors);
 })();
 
+var ct = 0;
 function boosted(original, boost) {
-  var boosted = {};
+  var with_boost = {
+    original_clinton: original.clinton,
+    original_trump:   original.trump
+  };
+
   for (var key in original) {
-    boosted[key] = original[key];
+    with_boost[key] = original[key];
   }
 
   if (boost.stein > 1 || boost.stein < 0) {
-    console.warn("Invalid boost.stein: " + boost.stein);
+    throw new Error("Invalid boost.stein: " + boost.stein);
   }
   if (boost.johnson > 1 || boost.johnson < 0) {
-    console.warn("Invalid boost.johnson: " + boost.johnson);
+    throw new Error("Invalid boost.johnson: " + boost.johnson);
   }
-  boosted.clinton = original.clinton + (original.stein * boost.stein) + (original.johnson + boost.johnson);
-  boosted.trump = original.trump + (original.stein * (1-boost.stein)) + (original.johnson + (1-boost.johnson));
 
-  return boosted;
+  with_boost.clinton = Math.floor(
+    original.clinton +
+    (original.stein * boost.stein) +
+    (original.johnson * boost.johnson)
+  );
+
+  with_boost.trump = Math.floor(
+    original.trump +
+    (original.stein * (1-boost.stein)) +
+    (original.johnson * (1-boost.johnson))
+  );
+
+  var old_spread = original.clinton - original.trump,
+      new_spread = with_boost.clinton - with_boost.trump;
+
+  if ((old_spread > 0) && (new_spread < 0)) {
+    with_boost.pickup = 'trump';
+  }
+  if ((old_spread < 0) && (new_spread > 0)) {
+    with_boost.pickup = 'clinton';
+  }
+  return with_boost;
 }
+
+$(document).ready(function() {
+  window.boosted = boosted;
+})

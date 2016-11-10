@@ -1,10 +1,9 @@
 $(document).ready(function() {
 
   var ct = 0;
+  var was_empty = false;
   window.refresh_map = function(booster) {
     $("#container").empty();
-
-    console.log("HELLO  " + (ct++));
 
     var electoral_map = window.electoral_map = new Datamap({
       scope: 'usa',
@@ -30,33 +29,29 @@ $(document).ready(function() {
         highlightBorderWidth: 3
       },
 
-      fills: {
-        clinton: '#8888FF',
-        trump:   '#FF8888'
-      },
+      fills: fills,
 
       data: (function() {
-        var final = {};
+        var r, orig, abbreviation, final = {};
 
-        for(var abbreviation in raw_data) {
-          var r = raw_data[abbreviation];
-          if (!!booster) {
-            // console.log("booster: " + JSON.stringify(booster));
-            // console.log("r:       " + JSON.stringify(r));
-            try {
-              r = boosted(r, booster);
-              // console.log("after:   " + JSON.stringify(r));
-            } catch(e) {
-              console.warn(e);
-            }
+        for(abbreviation in raw_data) {
+          orig = raw_data[abbreviation];
+
+          if (booster == null) {
+            r = orig;
+          } else {
+            console.log("BOOSTING");
+            r = boosted(orig, booster);
           }
+
           final[abbreviation] = {
             electoral_votes: r.electoral_votes,
             clinton: r.clinton, trump: r.trump,
             stein: r.stein, johnson: r.johnson,
-            fillKey: (r.clinton > r.trump) ? ((true) ? 'clinton' : 'trump') : ((true) ? 'trump' : 'clinton')
+            fillKey: getKey(r.clinton, r.trump, r.pickup)
           };
         }
+
         return final;
       })()
     });
