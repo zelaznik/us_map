@@ -1,42 +1,42 @@
 $( function() {
-  var $green   = $("#green"),
-      $blue    = $("#blue"),
-      $stein   = $("#stein"),
-      $johnson = $("#johnson"),
-      $green_and_blue = $( "#green, #blue" );
+  var $johnson_slider              = $('#blue'),
+      $stein_slider                = $('#green'),
+      $green_and_blue              = $('#green, #blue'),
+      $stein_percent_for_clinton   = $('#stein_percent_for_clinton'),
+      $johnson_percent_for_clinton = $('#johnson_percent_for_clinton');
 
   function refreshSwatch() {
-    var stein   = $green.slider('value'),
-        johnson = $blue.slider('value');
+    var stein   = $stein_slider.slider('value'),
+        johnson = $johnson_slider.slider('value');
 
     var booster  = { stein:   stein/256, johnson: johnson/256 },
         tmpGary  =  Math.floor(1000*booster.johnson) / 10,
         tmpStein =  Math.floor(1000*booster.stein) / 10;
 
-    $stein.attr('value', tmpStein);
-    $stein.val(tmpStein);
+    $stein_percent_for_clinton.attr('value', tmpStein);
+    $stein_percent_for_clinton.val(tmpStein);
 
-    $johnson.attr('value', tmpGary);
-    $johnson.val(tmpGary);
+    $johnson_percent_for_clinton.attr('value', tmpGary);
+    $johnson_percent_for_clinton.val(tmpGary);
 
     if (!!window.refresh_map) {
       window.refresh_map(booster);
     }
   }
 
-  $johnson.on('change', function() {
-    if (!$johnson.val()) {
-      $blue.slider('value', 128);
+  $johnson_percent_for_clinton.on('change', function() {
+    if (!$johnson_percent_for_clinton.val()) {
+      $johnson_slider.slider('value', 128);
     } else {
-      $blue.slider('value', 2.56*$johnson.val());
+      $johnson_slider.slider('value', 2.56*$johnson_percent_for_clinton.val());
     }
   });
 
-  $stein.on('change', function() {
-    if (!$stein.val()) {
-      $blue.slider('value', 128);
+  $stein_percent_for_clinton.on('change', function() {
+    if (!$stein_percent_for_clinton.val()) {
+      $stein_slider.slider('value', 128);
     } else {
-      $blue.slider('value', 2.56*$stein.val());
+      $stein_slider.slider('value', 2.56*$stein_percent_for_clinton.val());
     }
   });
 
@@ -49,6 +49,6 @@ $( function() {
       change: refreshSwatch
   });
 
-  $green.slider( "value", 128 );
-  $blue.slider(  "value", 128 );
+  $stein_slider.slider( "value", 128 );
+  $johnson_slider.slider(  "value", 128 );
 } );

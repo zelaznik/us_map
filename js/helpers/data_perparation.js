@@ -118,15 +118,15 @@ function boosted(original, boost) {
     original_trump:   original.trump
   };
 
-  for (var key in original) {
-    with_boost[key] = original[key];
+  for (var field_name in original) {
+    with_boost[field_name] = original[field_name];
   }
 
   if (boost.stein > 1 || boost.stein < 0) {
-    throw new Error("Invalid boost.stein: " + boost.stein);
+    throw new Error('Invalid boost.stein: ' + boost.stein);
   }
   if (boost.johnson > 1 || boost.johnson < 0) {
-    throw new Error("Invalid boost.johnson: " + boost.johnson);
+    throw new Error('Invalid boost.johnson: ' + boost.johnson);
   }
 
   with_boost.clinton = Math.floor(
@@ -155,4 +155,4 @@ function boosted(original, boost) {
 
 $(document).ready(function() {
   window.boosted = boosted;
-})
+});

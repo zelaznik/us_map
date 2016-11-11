@@ -1,13 +1,13 @@
 $(document).ready(function() {
 
   var ct = 0;
-  var was_empty = false;
+  var $container = $('#interactive_electoral_map');
   window.refresh_map = function(booster) {
-    $("#container").empty();
+    $container.empty();
 
     var electoral_map = window.electoral_map = new Datamap({
       scope: 'usa',
-      element: document.getElementById('container'),
+      element: document.getElementById('interactive_electoral_map'),
 
       geographyConfig: {
         highlightBorderColor: '#bada55',
@@ -57,7 +57,7 @@ $(document).ready(function() {
     });
 
     electoral_map.labels();
-  }
+  };
 
   window.refresh_map();
 });
