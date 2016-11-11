@@ -36,12 +36,15 @@
     <script src="js/sliders.js"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script type="text/javascript" src="js/helpers/data_perparation.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
   </head>
 
   <body class="ui-widget-content" style="border:0;">
     <div class="container">
-      <div class="container text-center">
-        <h1 class='text-center'>2016 Election - Was It A Spoiler?</h1>
+      <div class="row text-center">
+        <h1>2016 Election - Was It A Spoiler?</h1>
       </div>
 
       <div class="row text-justify">
@@ -57,49 +60,76 @@
             This interactive map takes real 2016 election results, and reapportions the third party vote.  If the Jill Stein slider is at seventy, that means 70% of her voters would pick Clinton over Trump.  Same thing with Gary Johnson.  You flip a Trump state to Clinton, that state will turn bright Green.  If you flip a Clinton state to Trump, the map of the state will turn bright pink.  To revert back to the original 2016 results, set both candidates to 50.
           </small></h2>
         </div>
-
-      </div>
-
-      <div class="row">
-        <h2><small>
-
-        </small></h2>
       </div>
     </div>
 
-    <div class="container text-center">
-      <div class="container text-center">
+    <hr />
 
-        <br />
-
-        <div class="row">
-          <div class="col col-xs-2">
-            <p class="lead"><strong>Jill Stein</strong></p>
-          </div>
-          <div class="col col-xs-2">
-            <input type="text" class="form-control" id="stein_percent_for_clinton">
-          </div>
-          <div class="col col-xs-5">
-            <span id="green" />
-          </div>
-          <div class="col col-xs-3"></div>
+    <div class="container">
+      <div class="row text-center">
+        <div class="col col-xs-2 col-xs-offset-2">
+          <p class="lead"><strong>% For Trump</strong></p>
         </div>
-
-        <div class="row">
-          <div class="col col-xs-2">
-            <p class="lead"><strong>Gary Johnson</strong></p>
-          </div>
-          <div class="col col-xs-2">
-            <input type="text" class="form-control" id="johnson_percent_for_clinton">
-          </div>
-          <div class="col col-xs-5">
-            <span id="blue" />
-          </div>
-          <div class="col col-xs-3"></div>
+        <div class="col col-xs-2">
+          <p class="lead"><strong>% For Clinton</strong></p>
         </div>
-
       </div>
 
+      <div class="row text-right">
+        <div class="col col-xs-2">
+          <p class="lead"><strong>Stein Voters</strong></p>
+        </div>
+        <div class="col col-xs-2">
+          <input type="text" class="form-control" id="stein_percent_for_trump" readonly="readonly" value="50" />
+        </div>
+        <div class="col col-xs-2">
+          <input type="text" class="form-control" id="stein_percent_for_clinton">
+        </div>
+        <div class="col col-xs-5">
+          <span id="green" />
+        </div>
+        <div class="col col-xs-3"></div>
+      </div>
+
+      <div class="row text-right">
+        <div class="col col-xs-2">
+          <p class="lead"><strong>Johnson Voters</strong></p>
+        </div>
+        <div class="col col-xs-2">
+          <input type="text" class="form-control" id="johnson_percent_for_trump" readonly="readonly" value="50" />
+        </div>
+        <div class="col col-xs-2">
+          <input type="text" class="form-control" id="johnson_percent_for_clinton">
+        </div>
+        <div class="col col-xs-5">
+          <span id="blue" />
+        </div>
+        <div class="col col-xs-3"></div>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="container">
+      <div class="row text-center">
+        <p class="lead"><strong>Electoral Votes (270 to win)</strong></p>
+        <p id="electoral_debugger"></p>
+      </div>
+      <div class="row">
+        <div class="col col-xs-offset-1 col-xs-10">
+          <div class="progress" id="electoral_progress_bar">
+            <div class="progress-bar" role="progressbar" style="width:40%" id="electoral_progress_bar_clinton">
+              <p class="lead text-left">Clinton</p>
+            </div>
+            <div class="progress-bar progress-bar-danger"  role="progressbar" id="electoral_progress_bar_trump" style="width:60%">
+              <p class="lead text-right">Trump</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
       <div class="row">
         <div class="container text-center">
           <div class="row text-center">
@@ -109,11 +139,9 @@
           </div>
         </div>
       </div>
-
     </div>
 
-    <script type="text/javascript" src="js/helpers/data_perparation.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
+    <hr />
 
     <div class="container text-center">
       <h2>Statewide Vote Totals</h2>

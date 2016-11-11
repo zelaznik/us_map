@@ -5,6 +5,25 @@ $(document).ready(function() {
   window.refresh_map = function(booster) {
     $container.empty();
 
+    var data = (function() {
+      var r, orig, abbreviation, final = {};
+
+      for(abbreviation in raw_data) {
+        orig = raw_data[abbreviation];
+
+        r = (booster == null) ? orig : boosted(orig, booster);
+
+        final[abbreviation] = {
+          electoral_votes: r.electoral_votes,
+          clinton: r.clinton, trump: r.trump,
+          stein: r.stein, johnson: r.johnson,
+          fillKey: getKey(r.clinton, r.trump, r.pickup)
+        };
+      }
+
+      return final;
+    })();
+
     var electoral_map = window.electoral_map = new Datamap({
       scope: 'usa',
       element: document.getElementById('interactive_electoral_map'),
@@ -30,33 +49,12 @@ $(document).ready(function() {
       },
 
       fills: fills,
-
-      data: (function() {
-        var r, orig, abbreviation, final = {};
-
-        for(abbreviation in raw_data) {
-          orig = raw_data[abbreviation];
-
-          if (booster == null) {
-            r = orig;
-          } else {
-            console.log("BOOSTING");
-            r = boosted(orig, booster);
-          }
-
-          final[abbreviation] = {
-            electoral_votes: r.electoral_votes,
-            clinton: r.clinton, trump: r.trump,
-            stein: r.stein, johnson: r.johnson,
-            fillKey: getKey(r.clinton, r.trump, r.pickup)
-          };
-        }
-
-        return final;
-      })()
+      data: data
     });
 
     electoral_map.labels();
+
+    return data;
   };
 
   window.refresh_map();
