@@ -53,9 +53,13 @@ var raw_data = {
 };
 
 var primary = {
-  clinton:    [ 48, 101, 150],
-  trump:      [204,  71,  49],
-  white:      [255, 255, 255]
+  clinton:        [ 48, 101, 150],
+  trump:          [204,  71,  49],
+  white:          [255, 255, 255],
+
+  clinton_dimmed: [34, 71, 105],
+  trump_dimmed:   [143, 50, 34],
+  light_grey:   [179, 179, 179]
 };
 
 function mixColor(color_start, color_finish, alpha) {
@@ -106,8 +110,12 @@ var fills = (function() {
     'pickup_clinton': '#00FF00',
     'pickup_trump':   '#FF00FF'
   };
-  createMix(primary.clinton, primary.white, 'clinton', mixed_colors);
-  createMix(primary.trump,   primary.white, 'trump',   mixed_colors);
+
+  createMix(primary.clinton,        primary.white,       'clinton',        mixed_colors);
+  createMix(primary.trump,          primary.white,       'trump',          mixed_colors);
+  createMix(primary.clinton_dimmed, primary.light_grey,  'clinton_dimmed', mixed_colors);
+  createMix(primary.trump_dimmed,   primary.light_grey,  'trump_dimmed',   mixed_colors);
+
   return Object.freeze(mixed_colors);
 })();
 
