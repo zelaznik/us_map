@@ -55,7 +55,8 @@ var raw_data = {
 var primary = {
   clinton: [ 34,  71, 105],
   trump:   [143,  50,  34],
-  white:   [160, 160, 160]
+  grey:    [160, 160, 160],
+  white:   [255, 255, 255]
 };
 
 function mixColor(color_start, color_finish, alpha) {
@@ -107,8 +108,8 @@ var fills = (function() {
     'pickup_trump':   '#FF00FF'
   };
 
-  createMix(primary.clinton, primary.white,'clinton', mixed_colors);
-  createMix(primary.trump,   primary.white,'trump',   mixed_colors);
+  createMix(primary.clinton, primary.grey, 'clinton', mixed_colors);
+  createMix(primary.trump, primary.grey, 'trump', mixed_colors);
   return Object.freeze(mixed_colors);
 })();
 

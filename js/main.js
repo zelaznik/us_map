@@ -58,4 +58,10 @@ $(document).ready(function() {
   };
 
   window.refresh_map();
+  var $stein_slider   = $('#green'),
+      $johnson_slider = $('#blue');
+
+  $stein_slider.slider( "value", 128 );
+  $johnson_slider.slider(  "value", 128 );
+
 });

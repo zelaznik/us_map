@@ -50,11 +50,11 @@ $( function() {
     $electoral_progress_bar_clinton.stop();
     $electoral_progress_bar_trump.stop();
 
-    $electoral_progress_bar_clinton.attr(       'style',   'width: ' + Math.min(max_width, clinton_width)       + '%; transition: 100ms; ');
-    $electoral_progress_bar_clinton_extra.attr( 'style',   'width: ' + Math.max(0,  clinton_width - max_width)  + '%; transition: 100ms; ');
+    $electoral_progress_bar_clinton.attr(       'style',   'width: ' + Math.min(max_width, clinton_width)       + '%; transition: 40ms; ');
+    $electoral_progress_bar_clinton_extra.attr( 'style',   'width: ' + Math.max(0,  clinton_width - max_width)  + '%; transition: 40ms; ');
 
-    $electoral_progress_bar_trump_extra.attr(   'style',   'width: ' + Math.max(0, trump_width - max_width)     + '%; transition: 100ms; ');
-    $electoral_progress_bar_trump.attr(         'style',   'width: ' + Math.min(max_width, trump_width)         + '%; transition: 100ms; ');
+    $electoral_progress_bar_trump_extra.attr(   'style',   'width: ' + Math.max(0, trump_width - max_width)     + '%; transition: 40ms; ');
+    $electoral_progress_bar_trump.attr(         'style',   'width: ' + Math.min(max_width, trump_width)         + '%; transition: 40ms; ');
 
     $electoral_text_bar_clinton.text('Clinton (' + electoral_total.clinton + ')');
     $electoral_text_bar_trump.text('(' + electoral_total.trump + ') Trump');
@@ -114,8 +114,4 @@ $( function() {
       slide: refreshSwatch,
       change: refreshSwatch
   });
-
-  $stein_slider.slider( "value", 128 );
-  $johnson_slider.slider(  "value", 128 );
-
 });
