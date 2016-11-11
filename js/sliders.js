@@ -45,6 +45,11 @@ $( function() {
         trump_width   =  100 - clinton_width,
         max_width     =  50;
 
+    $electoral_progress_bar_clinton_extra.stop();
+    $electoral_progress_bar_trump_extra.stop();
+    $electoral_progress_bar_clinton.stop();
+    $electoral_progress_bar_trump.stop();
+
     $electoral_progress_bar_clinton.attr(       'style',   'width: ' + Math.min(max_width, clinton_width)       + '%; transition: 100ms; ');
     $electoral_progress_bar_clinton_extra.attr( 'style',   'width: ' + Math.max(0,  clinton_width - max_width)  + '%; transition: 100ms; ');
 
