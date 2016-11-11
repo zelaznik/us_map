@@ -10,8 +10,8 @@ $( function() {
         johnson = $johnson_slider.slider('value');
 
     var booster  = { stein:   stein/256, johnson: johnson/256 },
-        tmpGary  =  Math.floor(1000*booster.johnson) / 10,
-        tmpStein =  Math.floor(1000*booster.stein) / 10;
+        tmpGary  =  Math.round(100*booster.johnson),
+        tmpStein =  Math.round(100*booster.stein);
 
     $stein_percent_for_clinton.attr('value', tmpStein);
     $stein_percent_for_clinton.val(tmpStein);
