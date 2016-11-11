@@ -56,3 +56,7 @@
 #blue .ui-slider-handle {
     border-color: #729fcf;
 }
+
+.progress-bar-extra {
+    opacity: 0.50;
+}
