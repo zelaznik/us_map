@@ -14,15 +14,27 @@ $(document).ready(function() {
         r = (booster == null) ? orig : boosted(orig, booster);
 
         final[abbreviation] = {
+          fillKey:         getKey(r.clinton, r.trump, r.pickup),
           electoral_votes: r.electoral_votes,
-          clinton: r.clinton, trump: r.trump,
-          stein: r.stein, johnson: r.johnson,
-          fillKey: getKey(r.clinton, r.trump, r.pickup)
+          clinton:         r.clinton,
+          trump:           r.trump,
+          stein:           r.stein,
+          johnson:         r.johnson
         };
       }
 
       return final;
     })();
+
+    var usa = window.usa = ElectionTable.from_json({
+      data: raw_data,
+      params: {
+        pct_johnson_to_clinton: (booster == null) ? 0.5 : booster.johnson,
+        pct_stein_to_clinton:   (booster == null) ? 0.5 : booster.stein
+      }
+    });
+
+    $('#results_by_state').html(election_table_body(usa));
 
     var electoral_map = window.electoral_map = new Datamap({
       scope: 'usa',
