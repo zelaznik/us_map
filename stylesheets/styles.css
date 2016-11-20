@@ -1,3 +1,19 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+table {
+  font-size: 1em;
+}
+
+.ui-draggable, .ui-droppable {
+  background-position: top;
+}
+
+.candidate-loser {
+  filter: grayscale(100%);
+}
+
 #interactive_electoral_map {
     position: relative;
     width: 1000px;
