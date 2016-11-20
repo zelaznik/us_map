@@ -1,30 +1,37 @@
 (function() {
   'use strict';
 
+  //http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+  function with_commas(x) {
+      return Math.floor(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   function election_table_headers() {
     return ([
-      '  <thead>',
       '    <tr>',
-      '      <th>state_name</th>',
-      '      <th>electoral_votes</th>',
-      '      <th>orig_votes_clinton</th>',
-      '      <th>orig_votes_trump</th>',
-      '      <th>orig_votes_johnson</th>',
-      '      <th>orig_votes_stein</th>',
-      '    </tr>',
-      '  </thead>'
+      '      <th class="text-center">State</th>',
+      '      <th class="text-right">Electors</th>',
+      '      <th class="text-right">Hillary Clinton</th>',
+      '      <th class="text-right">Donald Trump</th>',
+      '      <th class="text-right">Gary Johnson</th>',
+      '      <th class="text-right">Jill Stein</th>',
+      '      <th class="text-right">Original Spread</th>',
+      '      <th class="text-right">Adjusted Spread</th>',
+      '    </tr>'
     ].join('\n'));
   }
 
   function election_table_row(record, symbol) {
     return ([
       '    <tr>',
-      '      <td>' + record.state_name        + '</td>',
-      '      <td>' + record.electoral_votes   + '</td>',
-      '      <td>' + record.orig_vote_clinton + '</td>',
-      '      <td>' + record.orig_vote_trump   + '</td>',
-      '      <td>' + record.orig_vote_johnson + '</td>',
-      '      <td>' + record.orig_vote_stein   + '</td>',
+      '      <td class="text-center">' + record.state_name                     + '</td>',
+      '      <td class="text-right">'  + record.electoral_votes                + '</td>',
+      '      <td class="text-right">'  + with_commas(record.orig_vote_clinton) + '</td>',
+      '      <td class="text-right">'  + with_commas(record.orig_vote_trump)   + '</td>',
+      '      <td class="text-right">'  + with_commas(record.orig_vote_johnson) + '</td>',
+      '      <td class="text-right">'  + with_commas(record.orig_vote_stein)   + '</td>',
+      '      <td class="text-right">'  + with_commas(record.orig_spread)       + '</td>',
+      '      <td class="text-right">'  + with_commas(record.adjusted_spread)   + '</td>',
       '    </tr>'
     ].join('\n'));
   }

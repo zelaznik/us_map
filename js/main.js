@@ -1,7 +1,10 @@
 $(document).ready(function() {
 
   var ct = 0;
-  var $container = $('#interactive_electoral_map');
+  var $container        = $('#interactive_electoral_map'),
+      $results_headers  = $('#results_headers'),
+      $results_by_state = $('#results_by_state');
+
   window.refresh_map = function(booster) {
     $container.empty();
 
@@ -26,7 +29,7 @@ $(document).ready(function() {
       return final;
     })();
 
-    var usa = window.usa = ElectionTable.from_json({
+    var usa = window.usa = new ElectionTable({
       data: raw_data,
       params: {
         pct_johnson_to_clinton: (booster == null) ? 0.5 : booster.johnson,
@@ -34,7 +37,8 @@ $(document).ready(function() {
       }
     });
 
-    $('#results_by_state').html(election_table_body(usa));
+    $results_headers.html(election_table_headers(usa));
+    $results_by_state.html(election_table_body(usa));
 
     var electoral_map = window.electoral_map = new Datamap({
       scope: 'usa',

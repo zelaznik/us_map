@@ -90,20 +90,24 @@
   function ElectionTable(options) {
     this.pct_johnson_to_clinton = options.params.pct_johnson_to_clinton;
     this.pct_stein_to_clinton   = options.params.pct_stein_to_clinton;
-    this.rows                   = options.rows;
-  }
-
-  ElectionTable.from_json = function(options) {
-    var abbreviation, state_data, rows = {};
-    for (abbreviation in options.data) {
-      state_data = options.data[abbreviation];
-      rows[abbreviation] = new ElectionRow({data: state_data, table: this});
-    }
-
-    return new ElectionTable({rows: rows, params: options.params});
+    this.rows                   = this.make_rows(options.data);
   }
 
   inherit(ElectionTable, Election);
+
+  ElectionTable.prototype.make_rows = function(data) {
+    var symbol, state_data, row, rows;
+
+    rows = {};
+    for (symbol in data) {
+      rows[symbol] = new ElectionRow({
+        data:  data[symbol],
+        table: this
+      });
+    }
+
+    return rows;
+  };
 
   ElectionTable.prototype.sum = function(sequence) {
     return sequence.reduce(function(a,b) { return a+b; });
